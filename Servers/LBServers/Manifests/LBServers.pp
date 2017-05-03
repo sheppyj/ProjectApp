@@ -1,6 +1,7 @@
 class { "apache": }
 class { "apache::mod::proxy": }
 class { "apache::mod::proxy_balancer": }
+class { "sudo": }
 
 apache::balancer { "GoApp": }
 	apache::balancermember { "10.1.2.11": 
@@ -17,10 +18,18 @@ apache::vhost { "10.1.2.10":
    	port => "8080",
    	docroot => "/var/www",
    	proxy_pass=> [
-  		{ "path" => "/sign*", "url" => "balancer://GoApp/signup.html" },
-  		{ "path" => "/", "url" => "balancer://GoApp/signup.html" },
-  		{ "path" => "/returnuser*", "url" => "balancer://GoApp/returnuser.html" },
-  		{ "path" => "/user*", "url" => "balancer://GoApp/returnuser.html" },
-      { "path" => "/health*", "url" => "balancer://GoApp/health.html" }
+  		{ "path" => "/signup.html", "url" => "balancer://GoApp/signup.html" },
+      { "path" => "/returnuser.html", "url" => "balancer://GoApp/returnuser.html" }
    		],
    	}
+
+sudo::conf { "vagrant":
+  ensure => present,
+  content  => "vagrant ALL=(ALL) NOPASSWD: ALL",
+}
+
+sudo::conf { "%admin":
+  ensure => present,
+  content  => "%admin ALL=(ALL) NOPASSWD: ALL",
+}
+

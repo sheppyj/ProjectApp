@@ -95,15 +95,8 @@ func returnuserspage(response http.ResponseWriter, request *http.Request, ) {
 	}
 }
 
-func healthpage(response http.ResponseWriter, request *http.Request, ){
-
-	fmt.Fprint(response, "This application is living on the server; " + (os.Args[1]) + " on port; " + (os.Args[2]) )
-
-}
-
 func main() {
 	http.HandleFunc("/signup.html", signuppage)
 	http.HandleFunc("/returnuser.html", returnuserspage)
-	http.HandleFunc("/health.html", healthpage)
-	http.ListenAndServe(":" + (os.Args[2]), nil)
+	http.ListenAndServe(":" + (os.Args[1]), nil)
 }
