@@ -1,5 +1,5 @@
 Vagrant.configure("2") do |config|
-
+	#Provision and Configure database server via puppet
 	config.vm.define "dbsvr" do |dbsvr|
 		dbsvr.vm.box = "puppetlabs/ubuntu-14.04-64-nocm"
 		dbsvr.vm.box_url = "https://vagrantcloud.com/puppetlabs/boxes/ubuntu-14.04-64-nocm"
@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
 				puppet.manifest_file = "DBServers.pp"
 			end
 	end
-
+	#Provision and Configure application server via scripting (as awkward), send across application binary and compile and run
 	config.vm.define "appsvr1" do |appsvr1|
 		appsvr1.vm.box = "puppetlabs/ubuntu-14.04-64-nocm"
 		appsvr1.vm.box_url = "https://vagrantcloud.com/puppetlabs/boxes/ubuntu-14.04-64-nocm"
@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
 				puppet.manifest_file = "AppServers.pp"
 			end
 	end
-
+	#same as above
 	config.vm.define "appsvr2" do |appsvr2|
 		appsvr2.vm.box = "puppetlabs/ubuntu-14.04-64-nocm"
 		appsvr2.vm.box_url = "https://vagrantcloud.com/puppetlabs/boxes/ubuntu-14.04-64-nocm"
@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
 				puppet.manifest_file = "AppServers.pp"
 			end
 	end
-
+	#Provision and Configure loadbalancer to balancer traffic across the two application servers
 	config.vm.define "lbsvr" do |lbsvr|
 		lbsvr.vm.box = "puppetlabs/ubuntu-14.04-64-nocm"
 		lbsvr.vm.box_url = "https://vagrantcloud.com/puppetlabs/boxes/ubuntu-14.04-64-nocm"

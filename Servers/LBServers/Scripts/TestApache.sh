@@ -1,6 +1,6 @@
 #!/bin/bash
 #Script to test if defualt apache page is present is working
-
+#the string apache appears 12 times so count that there is at least one
 echo "Testing apache install"
 success=`curl -s -m 5 127.0.0.1 | grep "apache" | wc -l`
 echo $success
